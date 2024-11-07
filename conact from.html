@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .form-container { max-width: 400px; margin: 0 auto; }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="Enter your name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="Enter your email">
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" value="Enter your phone number">
+
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" value="Your message here">
+
+        <p class="error" id="error-message"></p>
+
+        <button type="button" onclick="validateAndSend()">Submit</button>
+    </form>
+</div>
+
+<script>
+    // Function to clear initial values when the input is focused
+    document.querySelectorAll('#contactForm input').forEach(input => {
+        input.addEventListener('focus', () => {
+            if (input.value === `Enter your ${input.name}` || input.value === 'Your message here') {
+                input.value = '';
+            }
+        });
+    });
+
+    // Validation and mailto trigger function
+    function validateAndSend() {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const errorMessage = document.getElementById('error-message');
+
+        if (!name || !email || !phone) {
+            errorMessage.textContent = "Please fill in all required fields: Name, Email, and Phone Number.";
+            return;
+        }
+
+        errorMessage.textContent = '';  // Clear any previous error message
+        const mailtoLink = `mailto:example@example.com?subject=Contact Form Submission&body=Name: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0AMessage: ${message}`;
+        window.location.href = mailtoLink;
+    }
+</script>
+
+</body>
+</html>
